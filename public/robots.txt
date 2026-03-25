@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kyiv-legal.com.ua/sitemap.xml
