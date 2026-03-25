@@ -3,8 +3,9 @@ import { PAGES } from '../../data/pages';
 import * as Sections from '../../components/Sections';
 import { notFound } from 'next/navigation';
 
-export async function generateMetadata({ params }: any) {
-  const page = PAGES[params.slug as keyof typeof PAGES];
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const page = PAGES[slug as keyof typeof PAGES];
   if (!page) return {};
   return {
     title: page.title,
@@ -12,10 +13,11 @@ export async function generateMetadata({ params }: any) {
   };
 }
 
-export default function DynamicPage({ params }: any) {
-  const page = PAGES[params.slug as keyof typeof PAGES];
+export default async function DynamicPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const page = PAGES[slug as keyof typeof PAGES];
 
-  if (!page || params.slug === 'home') {
+  if (!page || slug === 'home') {
     notFound();
   }
 
